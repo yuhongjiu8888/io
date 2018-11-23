@@ -5,9 +5,9 @@
   <subtitle>to be continued...</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://jackyu.com/"/>
+  <link href="http://yoursite.com/"/>
   <updated>2018-11-23T12:06:11.486Z</updated>
-  <id>http://jackyu.com/</id>
+  <id>http://yoursite.com/</id>
   
   <author>
     <name>JackYu</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>test_md</title>
-    <link href="http://jackyu.com/2018/11/23/test-md/"/>
-    <id>http://jackyu.com/2018/11/23/test-md/</id>
+    <link href="http://yoursite.com/2018/11/23/test-md/"/>
+    <id>http://yoursite.com/2018/11/23/test-md/</id>
     <published>2018-11-23T12:06:11.000Z</published>
     <updated>2018-11-23T12:06:11.486Z</updated>
     
@@ -32,8 +32,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://jackyu.com/2018/11/23/hello-world/"/>
-    <id>http://jackyu.com/2018/11/23/hello-world/</id>
+    <link href="http://yoursite.com/2018/11/23/hello-world/"/>
+    <id>http://yoursite.com/2018/11/23/hello-world/</id>
     <published>2018-11-23T05:42:10.082Z</published>
     <updated>2018-11-23T05:42:10.082Z</updated>
     
