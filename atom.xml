@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>JackYu Blog</title>
+  <title>JackYu&#39;s Blog</title>
   <icon>https://www.gravatar.com/avatar/7d6859529934feb0edca87907b1ce4e0</icon>
-  <subtitle>to be continued...</subtitle>
+  <subtitle>Nothing is impossible!</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
