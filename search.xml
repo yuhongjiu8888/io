@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[协程]]></title>
+    <url>%2F2018%2F12%2F26%2Fxiecheng%2F</url>
+    <content type="text"><![CDATA[协程，英文（coroutines）,是一种比线程更加轻量级的存在。 一个进程可以拥有多个线程，一个线程也可以拥有多个协程。 最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。 这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。 协程的开销远远小于线程的开销。 协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需要判断状态就好，所以执行效率比多线程高的多。 因为协程是一个线程执行，那怎么利用多核CPU呢？ 最简单的方法就是多进程+协程，既充分利用多核，又充分发挥协程的高效率。 ==协程允许我们写同步代码的逻辑，却做着异步的事，避免回调嵌套，使得代码逻辑清晰（协程是追求极限性能和优美的代码结构产物）==]]></content>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Lua脚本式编程]]></title>
+    <url>%2F2018%2F12%2F26%2Flua%2F</url>
+    <content type="text"><![CDATA[1.基本语法单行注释：–多行注释：–[[ 内容–]] lua最好不要使用下划线加大字母的标识符，因为lua的保留字是这样的。lua不允许使用特殊字符如@$%来定义标志符。 默认情况下，变量总是认为全局。删除全局变量，只需要将变量赋值nil . lua的数据类型：nil 、boolean、number、string、userdata、function、thread和table。 nil作为比较时应该加上双引号，例如 12type(x) == &quot;nil&quot; boolean类型只有两个可选值：true 和 falselua把false和nil看作是“假”，其他都为真。 number（数字）：lua只有一种number类型，double双精度类型，默认类型可以修改luaconf.h里面的定义。 string（字符串）：由一对双引号或单引号来表示，也可以用2个方括号“[[ ]]”来表示“一块”字符串。 对一个数字字符串上进行算术操作时，lua会尝试将这个数字字符串转换成一个数字。 12print(“2”+6) 8.0print("2"+"6") 8.0 字符串连接使用的是 . .如： 12print("a" .. "b") abprint(157 .. 428) 157428 #计算字符串的长度。 123len ="www.runoob.com"print(#len) 14print(#"www.runoob.com") 14 2.宿主语言C/C++==虚拟栈== 无论何时lua调用C，被调用的函数都得到一个新的栈，这个栈独立于C函数本身的栈，也独立于之前的栈。 方便起见，所有正对栈的API查询操作都不严格遵守栈的操作规则。而是可以用一个索引来指向栈上的任何元素： ==正的索引指的是栈上的绝对位置（从1开始），负的索引指从栈顶开始的偏移量。== Lua_checkstack:扩大可用堆栈的尺寸LUA_MINSTACK一般被定义为20。 压入栈的数据类型包括数值、字符串、指针、table、闭包。 Lua_pushcclosure(L,func,0)；创建并压入一个闭包Lua_createtable(L,0,0)；新建并压入一个表Lua_pushnumber(L,343)；压入一个数字Lua_pushstring(L,”Nystr”)；压入一个字符串 Lua中，number、boolean、nil、lightuserdata四种类型的值是直接存在栈上元素里和垃圾回收无关。Lua中，string、table、closure、userdata、thread存在栈上元素里的只是指针，他们都会在生命周期结束后被垃圾回收。 Lua_push族函数都有“创建一个类型的值并压入”的语义。Lua value -&gt; C value时，是通过Lua_to族api实现的。 123456取表中元素 void lua_getfield(lua_state *L,int index,const char *K)操作： arr = stack[index] stack.push(arr[K]) 取表中键为K的元素，这里的表是由index指向的栈上的一个表。 栈高度+1，栈顶元素是（stack[index]）[K]。]]></content>
+      <tags>
+        <tag>技术,编程语言</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[TCP/IP通讯知识]]></title>
     <url>%2F2018%2F11%2F25%2FTCP-IP%E9%80%9A%E8%AE%AF%E7%9F%A5%E8%AF%86%2F</url>
     <content type="text"></content>
