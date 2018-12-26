@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-26T08:56:28.000Z</updated>
+  <updated>2018-12-26T10:13:07.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git常用命令</title>
+    <link href="http://yoursite.com/2018/12/26/git/"/>
+    <id>http://yoursite.com/2018/12/26/git/</id>
+    <published>2018-12-26T10:14:18.278Z</published>
+    <updated>2018-12-26T10:13:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-git与SVN的区别"><a href="#1-git与SVN的区别" class="headerlink" title="1.git与SVN的区别"></a>1.git与SVN的区别</h5><p>git是分布式版本控制系统。必须客户端连接上服务端才能正常工作。<br>svn是集中式版本控制系统。每台机器就是一个单独运行的库，方便高效便捷的开发。</p><h5 id="2-git常用命令"><a href="#2-git常用命令" class="headerlink" title="2.git常用命令"></a>2.git常用命令</h5><p>git config -global ; 配置环境信息<br>git init ；将目录变成git管理的仓库，初始化仓库<br>git add ;提交到暂存区<br>git commit; 提交到本地仓<br>git status ;查看仓库是否有文件未提交<br>git diff 文件名；比较文件<br>git reset -hard HEAD~100;回到前100个版本<br>git reset -hard(版本号)；回到指定的版本号<br>git  reflog；取得版本号</p><p>git checkout -b ;创建并且换到分支<br>git branch dev ；创建分支<br>git checkout dev；切换分支<br>git merge dev; 将dev分支上的内容合并到主支master上<br>git branch -d name;删除分支</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;1-git与SVN的区别&quot;&gt;&lt;a href=&quot;#1-git与SVN的区别&quot; class=&quot;headerlink&quot; title=&quot;1.git与SVN的区别&quot;&gt;&lt;/a&gt;1.git与SVN的区别&lt;/h5&gt;&lt;p&gt;git是分布式版本控制系统。必须客户端连接上服务端才能正常工
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="http://yoursite.com/tags/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>协程</title>
