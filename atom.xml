@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-26T10:13:07.000Z</updated>
+  <updated>2018-12-26T12:39:35.464Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,19 +17,22 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>git常用命令</title>
-    <link href="http://yoursite.com/2018/12/26/git/"/>
-    <id>http://yoursite.com/2018/12/26/git/</id>
-    <published>2018-12-26T10:14:18.278Z</published>
-    <updated>2018-12-26T10:13:07.000Z</updated>
+    <title>协程</title>
+    <link href="http://yoursite.com/2018/12/26/xiecheng/"/>
+    <id>http://yoursite.com/2018/12/26/xiecheng/</id>
+    <published>2018-12-26T12:39:35.468Z</published>
+    <updated>2018-12-26T12:39:35.464Z</updated>
     
-    <content type="html"><![CDATA[<h5 id="1-git与SVN的区别"><a href="#1-git与SVN的区别" class="headerlink" title="1.git与SVN的区别"></a>1.git与SVN的区别</h5><p>git是分布式版本控制系统。必须客户端连接上服务端才能正常工作。<br>svn是集中式版本控制系统。每台机器就是一个单独运行的库，方便高效便捷的开发。</p><h5 id="2-git常用命令"><a href="#2-git常用命令" class="headerlink" title="2.git常用命令"></a>2.git常用命令</h5><p>git config -global ; 配置环境信息<br>git init ；将目录变成git管理的仓库，初始化仓库<br>git add ;提交到暂存区<br>git commit; 提交到本地仓<br>git status ;查看仓库是否有文件未提交<br>git diff 文件名；比较文件<br>git reset -hard HEAD~100;回到前100个版本<br>git reset -hard(版本号)；回到指定的版本号<br>git  reflog；取得版本号</p><p>git checkout -b ;创建并且换到分支<br>git branch dev ；创建分支<br>git checkout dev；切换分支<br>git merge dev; 将dev分支上的内容合并到主支master上<br>git branch -d name;删除分支</p>]]></content>
+    <content type="html"><![CDATA[<p>协程，英文（coroutines）,是一种比线程更加轻量级的存在。</p><ol><li>一个进程可以拥有多个线程，一个线程也可以拥有多个协程。</li><li>最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。</li><li>这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。</li><li>协程的开销远远小于线程的开销。</li><li>协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需要判断状态就好，所以执行效率比多线程高的多。</li></ol><p>因为协程是一个线程执行，那怎么利用多核CPU呢？<br>        最简单的方法就是多进程+协程，既充分利用多核，又充分发挥协程的高效率。</p><p>==协程允许我们写同步代码的逻辑，却做着异步的事，避免回调嵌套，使得代码逻辑清晰（协程是追求极限性能和优美的代码结构产物）==</p><p><em>参考手册</em> : <a href="http://ntycobook.ntytcp.com/" target="_blank" rel="noopener">协程详细介绍</a></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h5 id=&quot;1-git与SVN的区别&quot;&gt;&lt;a href=&quot;#1-git与SVN的区别&quot; class=&quot;headerlink&quot; title=&quot;1.git与SVN的区别&quot;&gt;&lt;/a&gt;1.git与SVN的区别&lt;/h5&gt;&lt;p&gt;git是分布式版本控制系统。必须客户端连接上服务端才能正常工
+        &lt;p&gt;协程，英文（coroutines）,是一种比线程更加轻量级的存在。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;一个进程可以拥有多个线程，一个线程也可以拥有多个协程。&lt;/li&gt;
+&lt;li&gt;最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。&lt;/li&gt;
       
     
     </summary>
@@ -40,22 +43,19 @@
   </entry>
   
   <entry>
-    <title>协程</title>
-    <link href="http://yoursite.com/2018/12/26/xiecheng/"/>
-    <id>http://yoursite.com/2018/12/26/xiecheng/</id>
-    <published>2018-12-26T08:58:34.519Z</published>
-    <updated>2018-12-26T08:56:28.000Z</updated>
+    <title>git常用命令</title>
+    <link href="http://yoursite.com/2018/12/26/git/"/>
+    <id>http://yoursite.com/2018/12/26/git/</id>
+    <published>2018-12-26T12:36:16.198Z</published>
+    <updated>2018-12-26T12:36:16.198Z</updated>
     
-    <content type="html"><![CDATA[<p>协程，英文（coroutines）,是一种比线程更加轻量级的存在。</p><ol><li>一个进程可以拥有多个线程，一个线程也可以拥有多个协程。</li><li>最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。</li><li>这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。</li><li>协程的开销远远小于线程的开销。</li><li>协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需要判断状态就好，所以执行效率比多线程高的多。</li></ol><p>因为协程是一个线程执行，那怎么利用多核CPU呢？<br>        最简单的方法就是多进程+协程，既充分利用多核，又充分发挥协程的高效率。</p><p>==协程允许我们写同步代码的逻辑，却做着异步的事，避免回调嵌套，使得代码逻辑清晰（协程是追求极限性能和优美的代码结构产物）==</p>]]></content>
+    <content type="html"><![CDATA[<h5 id="1-git与SVN的区别"><a href="#1-git与SVN的区别" class="headerlink" title="1.git与SVN的区别"></a>1.git与SVN的区别</h5><p>git是分布式版本控制系统。必须客户端连接上服务端才能正常工作。<br>svn是集中式版本控制系统。每台机器就是一个单独运行的库，方便高效便捷的开发。</p><h5 id="2-git常用命令"><a href="#2-git常用命令" class="headerlink" title="2.git常用命令"></a>2.git常用命令</h5><p>git config -global ; 配置环境信息<br>git init ；将目录变成git管理的仓库，初始化仓库<br>git add ;提交到暂存区<br>git commit; 提交到本地仓<br>git status ;查看仓库是否有文件未提交<br>git diff 文件名；比较文件<br>git reset -hard HEAD~100;回到前100个版本<br>git reset -hard(版本号)；回到指定的版本号<br>git  reflog；取得版本号</p><p>git checkout -b ;创建并且换到分支<br>git branch dev ；创建分支<br>git checkout dev；切换分支<br>git merge dev; 将dev分支上的内容合并到主支master上<br>git branch -d name;删除分支</p><p><em>参考手册</em> :  <a href="http://47.106.79.26:4000/" target="_blank" rel="noopener">git详细介绍</a></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;协程，英文（coroutines）,是一种比线程更加轻量级的存在。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;一个进程可以拥有多个线程，一个线程也可以拥有多个协程。&lt;/li&gt;
-&lt;li&gt;最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。&lt;/li&gt;
+        &lt;h5 id=&quot;1-git与SVN的区别&quot;&gt;&lt;a href=&quot;#1-git与SVN的区别&quot; class=&quot;headerlink&quot; title=&quot;1.git与SVN的区别&quot;&gt;&lt;/a&gt;1.git与SVN的区别&lt;/h5&gt;&lt;p&gt;git是分布式版本控制系统。必须客户端连接上服务端才能正常工
       
     
     </summary>

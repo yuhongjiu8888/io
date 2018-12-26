@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[git常用命令]]></title>
-    <url>%2F2018%2F12%2F26%2Fgit%2F</url>
-    <content type="text"><![CDATA[1.git与SVN的区别git是分布式版本控制系统。必须客户端连接上服务端才能正常工作。svn是集中式版本控制系统。每台机器就是一个单独运行的库，方便高效便捷的开发。 2.git常用命令git config -global ; 配置环境信息git init ；将目录变成git管理的仓库，初始化仓库git add ;提交到暂存区git commit; 提交到本地仓git status ;查看仓库是否有文件未提交git diff 文件名；比较文件git reset -hard HEAD~100;回到前100个版本git reset -hard(版本号)；回到指定的版本号git reflog；取得版本号 git checkout -b ;创建并且换到分支git branch dev ；创建分支git checkout dev；切换分支git merge dev; 将dev分支上的内容合并到主支master上git branch -d name;删除分支]]></content>
+    <title><![CDATA[协程]]></title>
+    <url>%2F2018%2F12%2F26%2Fxiecheng%2F</url>
+    <content type="text"><![CDATA[协程，英文（coroutines）,是一种比线程更加轻量级的存在。 一个进程可以拥有多个线程，一个线程也可以拥有多个协程。 最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。 这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。 协程的开销远远小于线程的开销。 协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需要判断状态就好，所以执行效率比多线程高的多。 因为协程是一个线程执行，那怎么利用多核CPU呢？ 最简单的方法就是多进程+协程，既充分利用多核，又充分发挥协程的高效率。 ==协程允许我们写同步代码的逻辑，却做着异步的事，避免回调嵌套，使得代码逻辑清晰（协程是追求极限性能和优美的代码结构产物）== 参考手册 : 协程详细介绍]]></content>
       <tags>
         <tag>技术</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[协程]]></title>
-    <url>%2F2018%2F12%2F26%2Fxiecheng%2F</url>
-    <content type="text"><![CDATA[协程，英文（coroutines）,是一种比线程更加轻量级的存在。 一个进程可以拥有多个线程，一个线程也可以拥有多个协程。 最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。 这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。 协程的开销远远小于线程的开销。 协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需要判断状态就好，所以执行效率比多线程高的多。 因为协程是一个线程执行，那怎么利用多核CPU呢？ 最简单的方法就是多进程+协程，既充分利用多核，又充分发挥协程的高效率。 ==协程允许我们写同步代码的逻辑，却做着异步的事，避免回调嵌套，使得代码逻辑清晰（协程是追求极限性能和优美的代码结构产物）==]]></content>
+    <title><![CDATA[git常用命令]]></title>
+    <url>%2F2018%2F12%2F26%2Fgit%2F</url>
+    <content type="text"><![CDATA[1.git与SVN的区别git是分布式版本控制系统。必须客户端连接上服务端才能正常工作。svn是集中式版本控制系统。每台机器就是一个单独运行的库，方便高效便捷的开发。 2.git常用命令git config -global ; 配置环境信息git init ；将目录变成git管理的仓库，初始化仓库git add ;提交到暂存区git commit; 提交到本地仓git status ;查看仓库是否有文件未提交git diff 文件名；比较文件git reset -hard HEAD~100;回到前100个版本git reset -hard(版本号)；回到指定的版本号git reflog；取得版本号 git checkout -b ;创建并且换到分支git branch dev ；创建分支git checkout dev；切换分支git merge dev; 将dev分支上的内容合并到主支master上git branch -d name;删除分支 参考手册 : git详细介绍]]></content>
       <tags>
         <tag>技术</tag>
       </tags>
