@@ -81,18 +81,23 @@
 
 
 
-<meta name="description" content="协程，英文（coroutines）,是一种比线程更加轻量级的存在。  一个进程可以拥有多个线程，一个线程也可以拥有多个协程。 最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。 这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。 协程的开销远远小于线程的开销。 协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需">
+<meta name="description" content="为什么需要线程池在那些情况下我们会使用到多线程： 1.阻塞调用（阻塞IO调用、等待资源）2.耗时的计算（读写文件、复杂的计算）3.高密度任务（高并发低延时的网络IO请求）面临以上情况时都去临时创建线程会带来什么问题： 1.创建了太多的线程，系统资源就会被浪费，而且会浪费时间去创建和销毁线程。2.创建线程太慢，导致执行任务结果返回过慢。3.销毁线程太慢，可能会影响别的进程使用资源。所以：创建多个线程">
 <meta name="keywords" content="技术">
 <meta property="og:type" content="article">
-<meta property="og:title" content="协程">
-<meta property="og:url" content="http://yoursite.com/2018/12/26/xiecheng/index.html">
+<meta property="og:title" content="线程池">
+<meta property="og:url" content="http://yoursite.com/2018/12/26/threadpool/index.html">
 <meta property="og:site_name" content="JackYu&#39;s Blog">
-<meta property="og:description" content="协程，英文（coroutines）,是一种比线程更加轻量级的存在。  一个进程可以拥有多个线程，一个线程也可以拥有多个协程。 最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。 这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。 协程的开销远远小于线程的开销。 协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需">
+<meta property="og:description" content="为什么需要线程池在那些情况下我们会使用到多线程： 1.阻塞调用（阻塞IO调用、等待资源）2.耗时的计算（读写文件、复杂的计算）3.高密度任务（高并发低延时的网络IO请求）面临以上情况时都去临时创建线程会带来什么问题： 1.创建了太多的线程，系统资源就会被浪费，而且会浪费时间去创建和销毁线程。2.创建线程太慢，导致执行任务结果返回过慢。3.销毁线程太慢，可能会影响别的进程使用资源。所以：创建多个线程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-26T12:39:35.464Z">
+<meta property="og:image" content="https://github.com/zhiyong0804/f-threadpool/blob/master/cond_mutex.png?raw=true">
+<meta property="og:image" content="https://github.com/zhiyong0804/f-threadpool/blob/master/fuck.png?raw=true">
+<meta property="og:image" content="https://github.com/zhiyong0804/f-threadpool/blob/master/multiple.png?raw=true">
+<meta property="og:image" content="https://github.com/zhiyong0804/f-threadpool/blob/master/lijiao.jpg?raw=true">
+<meta property="og:updated_time" content="2018-12-26T14:13:35.345Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="协程">
-<meta name="twitter:description" content="协程，英文（coroutines）,是一种比线程更加轻量级的存在。  一个进程可以拥有多个线程，一个线程也可以拥有多个协程。 最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。 这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。 协程的开销远远小于线程的开销。 协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需">
+<meta name="twitter:title" content="线程池">
+<meta name="twitter:description" content="为什么需要线程池在那些情况下我们会使用到多线程： 1.阻塞调用（阻塞IO调用、等待资源）2.耗时的计算（读写文件、复杂的计算）3.高密度任务（高并发低延时的网络IO请求）面临以上情况时都去临时创建线程会带来什么问题： 1.创建了太多的线程，系统资源就会被浪费，而且会浪费时间去创建和销毁线程。2.创建线程太慢，导致执行任务结果返回过慢。3.销毁线程太慢，可能会影响别的进程使用资源。所以：创建多个线程">
+<meta name="twitter:image" content="https://github.com/zhiyong0804/f-threadpool/blob/master/cond_mutex.png?raw=true">
 
 
 
@@ -122,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/26/xiecheng/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/26/threadpool/">
 
 
 
 
 
-  <title>协程 | JackYu's Blog</title>
+  <title>线程池 | JackYu's Blog</title>
   
 
 
@@ -297,7 +302,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/26/xiecheng/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/26/threadpool/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackYu">
@@ -314,7 +319,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">协程</h2>
+          <h2 class="post-title" itemprop="name headline">线程池</h2>
         
 
         <div class="post-meta">
@@ -326,7 +331,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-26T20:39:35+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-26T22:13:35+08:00">
                 2018-12-26
               </time>
             
@@ -364,17 +369,41 @@
       
 
       
-        <p>协程，英文（coroutines）,是一种比线程更加轻量级的存在。</p>
-<ol>
-<li>一个进程可以拥有多个线程，一个线程也可以拥有多个协程。</li>
-<li>最重要的是，协程不是被操作系统内核所管理（内核调用），而完全是由用户态程序所控制（用户态执行）。</li>
-<li>这样带来的好处就是性能得到了很大的提升，不像进程线程切换带来的消耗资源，cpu的调度。</li>
-<li>协程的开销远远小于线程的开销。</li>
-<li>协程并不想线程需要锁机制，协程中控制共享资源不加锁，只需要判断状态就好，所以执行效率比多线程高的多。</li>
-</ol>
-<p>因为协程是一个线程执行，那怎么利用多核CPU呢？<br>        最简单的方法就是多进程+协程，既充分利用多核，又充分发挥协程的高效率。</p>
-<p>==协程允许我们写同步代码的逻辑，却做着异步的事，避免回调嵌套，使得代码逻辑清晰（协程是追求极限性能和优美的代码结构产物）==</p>
-<p><em>参考手册</em> : <a href="http://ntycobook.ntytcp.com/" target="_blank" rel="noopener">协程详细介绍</a></p>
+        <h5 id="为什么需要线程池"><a href="#为什么需要线程池" class="headerlink" title="为什么需要线程池"></a>为什么需要线程池</h5><p>在那些情况下我们会使用到多线程：</p>
+<p>1.阻塞调用（阻塞IO调用、等待资源）<br>2.耗时的计算（读写文件、复杂的计算）<br>3.高密度任务（高并发低延时的网络IO请求）<br>面临以上情况时都去临时创建线程会带来什么问题：</p>
+<p>1.创建了太多的线程，系统资源就会被浪费，而且会浪费时间去创建和销毁线程。<br>2.创建线程太慢，导致执行任务结果返回过慢。<br>3.销毁线程太慢，可能会影响别的进程使用资源。<br>所以：创建多个线程，放在池子里不销毁，要用的时候就把任务丢给池子里的线程去执行，这就是线程池。<br>OK，问题来了任务由谁产生（生产者），如何丢给线程池的某个线程（消费者）？这个问题的回答需从以下几方面：</p>
+<p>1） 生产者采用什么方式与消费者同步？<br>2） 任务如何保存？<br>3） 生产者之间的同步方式，消费者之间的同步方式？</p>
+<p>一下所有的代码设计适用于单生产者多消费者模式</p>
+<h5 id="条件变量结合互斥锁-任务队列"><a href="#条件变量结合互斥锁-任务队列" class="headerlink" title="条件变量结合互斥锁 + 任务队列"></a>条件变量结合互斥锁 + 任务队列</h5><p>设计如何：</p>
+<p><img src="https://github.com/zhiyong0804/f-threadpool/blob/master/cond_mutex.png?raw=true" alt="enter description here"></p>
+<p>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">typedef struct queue_task</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">void</span>* (*run)(<span class="keyword">void</span> *);</span><br><span class="line">    <span class="keyword">void</span>* argv;</span><br><span class="line">&#125;task_t;</span><br><span class="line"></span><br><span class="line">typedef struct queue</span><br><span class="line">&#123;</span><br><span class="line">    int      head;</span><br><span class="line">    int      tail;</span><br><span class="line">    int      size;</span><br><span class="line">    int      capcity;</span><br><span class="line">    task_t*  tasks;</span><br><span class="line">&#125; queue_t;</span><br><span class="line"></span><br><span class="line">typedef struct async_queue</span><br><span class="line">&#123;</span><br><span class="line">    pthread_mutex_t  mutex;</span><br><span class="line">    pthread_cond_t   cond;</span><br><span class="line">    int              waiting_threads;</span><br><span class="line"></span><br><span class="line">    queue_t*         queue;</span><br><span class="line">    int              quit;   <span class="comment">// 0 表示不退出  1 表示退出</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 调试变量 */</span></span><br><span class="line">    long long        tasked;  <span class="comment">// 已经处理完的任务数量</span></span><br><span class="line">&#125; async_queue_t;</span><br></pre></td></tr></table></figure>
+<p>取任务的代码设计如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">task_t* async_cond_queue_pop_head(async_queue_t* q, int timeout)</span><br><span class="line">&#123;</span><br><span class="line">    task_t *task = NULL;</span><br><span class="line">    struct timeval now;</span><br><span class="line">    struct timespec outtime;</span><br><span class="line">    pthread_mutex_lock(&amp;(q-&gt;mutex));</span><br><span class="line">    <span class="keyword">if</span> (queue_is_empty(q-&gt;queue))</span><br><span class="line">    &#123;</span><br><span class="line">        q-&gt;waiting_threads++;</span><br><span class="line">        <span class="keyword">while</span> (queue_is_empty(q-&gt;queue) &amp;&amp; (q-&gt;quit == <span class="number">0</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            gettimeofday(&amp;now, NULL);</span><br><span class="line">            <span class="keyword">if</span> (now.tv_usec + timeout &gt; <span class="number">1000</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                outtime.tv_sec = now.tv_sec + <span class="number">1</span>;</span><br><span class="line">                outtime.tv_nsec = ((now.tv_usec + timeout) % <span class="number">1000</span>) * <span class="number">1000</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                outtime.tv_sec = now.tv_sec;</span><br><span class="line">                outtime.tv_nsec = (now.tv_usec + timeout) * <span class="number">1000</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            pthread_cond_timedwait(&amp;(q-&gt;cond), &amp;(q-&gt;mutex), &amp;outtime);</span><br><span class="line">        &#125;</span><br><span class="line">        q-&gt;waiting_threads--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    task = queue_pop_head(q-&gt;queue);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 调试代码 */</span></span><br><span class="line">    <span class="keyword">if</span> (task)</span><br><span class="line">    &#123;</span><br><span class="line">        q-&gt;tasked ++;</span><br><span class="line">        <span class="keyword">static</span> long long precision = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">if</span> ((q-&gt;tasked % precision ) == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            time_t current_stm = get_current_timestamp();</span><br><span class="line">            precision *= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    pthread_mutex_unlock(&amp;(q-&gt;mutex));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> task;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>详情见：<a href="https://github.com/zhiyong0804/f-threadpool/blob/master/async_cond_queue.c" target="_blank" rel="noopener">https://github.com/zhiyong0804/f-threadpool/blob/master/async_cond_queue.c</a></p>
+<p>不足：</p>
+<p>因为Mutex引起线程挂起和唤醒的操作，在IO密集型的服务器上不是特别高效（实测过）；<br>条件变量必须和互斥锁相结合使用，使用起来较麻烦；<br>条件变量不能像eventfd一样为I/O事件驱动。<br>管道可以和I/O复用很好的融合，但是管道比eventfd多用了一个文件描述符，而且管道内核还得给其管理的缓冲区，eventfd则不需要，因此eventfd比起管道要高效。</p>
+<h5 id="eventfd-epoll"><a href="#eventfd-epoll" class="headerlink" title="eventfd + epoll"></a>eventfd + epoll</h5><p>队列的设计：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef struct async_queue</span><br><span class="line">&#123;</span><br><span class="line">    queue_t*         queue;</span><br><span class="line">    int              quit;   <span class="comment">// 0 表示不退出  1 表示退出</span></span><br><span class="line"></span><br><span class="line">    int              efd;     <span class="comment">//event fd,</span></span><br><span class="line">    int              epollfd; <span class="comment">// epoll fd</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 调试变量 */</span></span><br><span class="line">    long long        tasked;  <span class="comment">// 已经处理完的任务数量</span></span><br><span class="line">&#125; async_queue_t;</span><br></pre></td></tr></table></figure>
+<p>插入任务：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">BOOL async_eventfd_queue_push_tail(async_queue_t* q, task_t *task)</span><br><span class="line">&#123;</span><br><span class="line">    unsigned long long i = <span class="number">0xffffffff</span>;</span><br><span class="line">    <span class="keyword">if</span> (!queue_is_full(q-&gt;queue))</span><br><span class="line">    &#123;</span><br><span class="line">        queue_push_tail(q-&gt;queue, task);</span><br><span class="line"></span><br><span class="line">        struct epoll_event ev;</span><br><span class="line">        int efd = eventfd(<span class="number">0</span>, EFD_CLOEXEC | EFD_NONBLOCK);</span><br><span class="line">        <span class="keyword">if</span> (efd == <span class="number">-1</span>) printf(<span class="string">"eventfd create: %s"</span>, strerror(errno));</span><br><span class="line">        ev.events = EPOLLIN ;<span class="comment">// | EPOLLLT;</span></span><br><span class="line">        ev.data.fd = efd;</span><br><span class="line">        <span class="keyword">if</span> (epoll_ctl(q-&gt;epollfd, EPOLL_CTL_ADD, efd, &amp;ev) == <span class="number">-1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> NULL;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        write(efd, &amp;i, sizeof (i));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> TRUE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> FALSE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>取任务：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">task_t* async_eventfd_queue_pop_head(async_queue_t* q, int timeout)</span><br><span class="line">&#123;</span><br><span class="line">    unsigned long long i = <span class="number">0</span>;</span><br><span class="line">    struct epoll_event events[MAX_EVENTS];</span><br><span class="line">    int nfds = epoll_wait(q-&gt;epollfd, events, MAX_EVENTS, <span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">if</span> (nfds == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        read(events[<span class="number">0</span>].data.fd, &amp;i, sizeof (i));</span><br><span class="line">        close(events[<span class="number">0</span>].data.fd); <span class="comment">// <span class="doctag">NOTE:</span> need to close here</span></span><br><span class="line">        task_t* task = queue_pop_head(q-&gt;queue);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 调试代码 */</span></span><br><span class="line">        <span class="keyword">if</span> (task)</span><br><span class="line">        &#123;</span><br><span class="line">            q-&gt;tasked ++;</span><br><span class="line">            <span class="keyword">static</span> long long precision = <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">if</span> ((q-&gt;tasked % precision ) == <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                time_t current_stm = get_current_timestamp();</span><br><span class="line">                printf(<span class="string">"%d tasks cost : %d\n"</span>, precision, current_stm - start_stm);</span><br><span class="line">                precision *= <span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> task;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> NULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为eventfd每次写数据后，只会唤醒一个epoll_wait所在的线程，so，确保了同一时刻仅有一个线程取任务。<br>代码详情：<a href="https://github.com/zhiyong0804/f-threadpool/blob/master/async_eventfd_queue.c" target="_blank" rel="noopener">https://github.com/zhiyong0804/f-threadpool/blob/master/async_eventfd_queue.c</a></p>
+<p>不足：<br>上面两种方案，所有的线程共用同一个队列，所以消费者线程之间取任务时需要做同步，生产者和消费者也需要做同步。用一个形象的图可以表示如下：<br><img src="https://github.com/zhiyong0804/f-threadpool/blob/master/fuck.png?raw=true" alt="enter description here"></p>
+<h5 id="eventfd-epoll-多队列的设计"><a href="#eventfd-epoll-多队列的设计" class="headerlink" title="eventfd + epoll + 多队列的设计"></a>eventfd + epoll + 多队列的设计</h5><p>设计思想如下图：<br><img src="https://github.com/zhiyong0804/f-threadpool/blob/master/multiple.png?raw=true" alt="enter description here"></p>
+<p>代码详情见：<a href="https://github.com/zhiyong0804/StreamingServer" target="_blank" rel="noopener">https://github.com/zhiyong0804/StreamingServer</a><br>Oh my god, huge project, where can i find thre thread pool source. 说来话长，这个代码是EasyDarwin的源码，但是因为某种原因，EasyDarwin的源码不再共享，取而代之的打赏的二维码，so， 我把他们的源码做了局部的修改，然后重新提交，且命名为StreamingServer，里面的设计是采用条件变量做同步的，但是多队列的思想是可以沿袭的，打算加班用eventfd实现。</p>
+<p>这样一种设计是不是让我们能够想到下面这幅图呢？<br><img src="https://github.com/zhiyong0804/f-threadpool/blob/master/lijiao.jpg?raw=true" alt="enter description here"></p>
+<p>之前所有的道路遇到十字路口时（共享了资源），只能使用信号灯去同步汽车的行驶，现如今，把共享资源fuck掉了，用立交桥，爽吧！！！？</p>
+<p>并行编程是很难的，可以参考以下这篇论文:</p>
+<p>并发编程的11个问题英文版：<a href="http://www.it610.com/article/4462577.htm" target="_blank" rel="noopener">http://www.it610.com/article/4462577.htm</a><br>并发编程的11个问题中文版：<a href="https://blog.csdn.net/mergerly/article/details/39028861" target="_blank" rel="noopener">https://blog.csdn.net/mergerly/article/details/39028861</a><br>我也并不聪明，可是当我2年前接触到ZeroMQ这个项目时，我特别惊叹于Pieter Hintjens的一些观点，“真正的并发就是不共享资源”</p>
+<p>so，方案四的设计</p>
+<h5 id="Lock-free"><a href="#Lock-free" class="headerlink" title="Lock-free"></a>Lock-free</h5><p>当我们在第三种方案上，增加了多队列，即每线程每队列时，实际上我们的队列设计变成了一个单生产者单消费者共享的队列，但是这个队列的写指针（tail）仅会被生产者使用，读指针（head）仅会被消费者使用，实际上没有共享任何资源，当然queue_t的size变量，我正在重构把它拿掉。</p>
+<p><strong>OK，那么在这种设计下，消费者线程如何“等待”如何“取”任务？</strong></p>
+<p>实际上，上面的三种方案对于消费者线程都是被动等待通知，收到通知则去取任务，实际上，我们完全可以设计成“轮询”的方案，就是不停地看自己的任务队列里是否有任务，没有就循环一次，中间当然可以加上sched_yield操作，让其它的线程能够得到调度。</p>
+<h5 id="线程池的尺寸设计多大合适？"><a href="#线程池的尺寸设计多大合适？" class="headerlink" title="线程池的尺寸设计多大合适？"></a>线程池的尺寸设计多大合适？</h5><p>CPU密集型的：<br>thread size = N + 1;<br>IO密集型的：<br>thread size = 2*N + 1;</p>
+<p>当然这不是绝对的，所以在mariadb的线程池是可以动态调整这个尺寸的。</p>
+<p>——————————————全文完—————————————————–</p>
       
     </div>
     
@@ -412,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/26/git/" rel="next" title="git常用命令">
-                <i class="fa fa-chevron-left"></i> git常用命令
+              <a href="/2018/12/26/mutex/" rel="next" title="Mutex的实现原理">
+                <i class="fa fa-chevron-left"></i> Mutex的实现原理
               </a>
             
           </div>
@@ -421,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/26/mutex/" rel="prev" title="Mutex的实现原理">
-                Mutex的实现原理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -478,8 +503,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -577,6 +611,22 @@
         </section></div>
       
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#为什么需要线程池"><span class="nav-number">1.</span> <span class="nav-text">为什么需要线程池</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#条件变量结合互斥锁-任务队列"><span class="nav-number">2.</span> <span class="nav-text">条件变量结合互斥锁 + 任务队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#eventfd-epoll"><span class="nav-number">3.</span> <span class="nav-text">eventfd + epoll</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#eventfd-epoll-多队列的设计"><span class="nav-number">4.</span> <span class="nav-text">eventfd + epoll + 多队列的设计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Lock-free"><span class="nav-number">5.</span> <span class="nav-text">Lock-free</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#线程池的尺寸设计多大合适？"><span class="nav-number">6.</span> <span class="nav-text">线程池的尺寸设计多大合适？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
