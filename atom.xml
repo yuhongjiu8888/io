@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-26T14:13:35.345Z</updated>
+  <updated>2018-12-27T02:48:00.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker常用命令</title>
+    <link href="http://yoursite.com/2018/12/27/docker/"/>
+    <id>http://yoursite.com/2018/12/27/docker/</id>
+    <published>2018-12-27T02:50:02.862Z</published>
+    <updated>2018-12-27T02:48:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="docker是什么？"><a href="#docker是什么？" class="headerlink" title="docker是什么？"></a>docker是什么？</h5><p>docker是一个开源的容器引擎，它基于LCX容器技术，使用Go语言开发。<br>源代码托管在Github上，并遵从Apache2.0协议。<br>Docker采用C/S架构，其可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。</p><p>简单来说：Docker就是一种快速解决生产问题的一种技术手段。<br>简单点：Docker就是对容器进行操作管理的工具</p><h5 id="docker优缺点"><a href="#docker优缺点" class="headerlink" title="docker优缺点"></a>docker优缺点</h5><p><strong>优点：</strong><br>多：    适用场景多<br>快：    环境部署快、更新快<br>好：    好多人在用<br>省：    省钱省力省人工</p><p><strong>缺点：</strong><br>太腻歪人：  依赖操作系统<br>不善沟通：  依赖网络<br>不善理财：  银行U盾等场景不能用</p><h5 id="镜像命令"><a href="#镜像命令" class="headerlink" title="镜像命令"></a>镜像命令</h5><p>搜索 ： docker search 【image_name】<br>获取 ： docker pull 【image_name】<br>查看 ： docker image 【image_name】<br>docker image -a 列出本地的image（包括已删除的镜像记录）<br>镜像重命名： docker tag [old_name]:[old_version]  [new_name]:[new_verdion]<br>删除镜像：docker rmi [image_id]<br>导出镜像：（将已下载好的镜像，导出到本地）<br>                docker save  -o [导出镜像名称]   [本地镜像]<br>                例：docker save -o nginx.tar nginx</p><p>导入镜像： docker load  &lt; [image.tar_name]</p><h5 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h5><p>查看容器： docker ps<br>启动容器三种方式：</p><ol><li><p>基于镜像新建一个容器并启动<br>docker  run  &lt;参数，可选&gt;   [docker_image]  [执行命令]<br><strong>docker run 其实是两个命令的结合体docker create + docker start</strong></p></li><li><p>将关闭的容器重新启动<br>docker  start   [container_id]</p></li><li><p>守护进程方式启动(常用方式)<br>docker  run  -d  [image_name]   command…<br>例：docker run  -d nginx</p></li></ol><p>关闭容器： docker stop  [container_id]</p><p>删除容器的三种方式：<br>1.正常删除- - -删除已关闭的<br>docker  rm [container_id]</p><p>2.强制删除- - - 删除正在运行的<br>docker rm  -f  [container_id]</p><p>3.强制批量删除- - - 删除全部容器<br>docker rm  -f $(docker ps -a -q)</p><p>进入容器三种方法：<br>1.创建容器的同事并且进入容器<br>docker  run  –name  [container_name] -it [docker_image]  /bin/bash</p><p>2.手工方式进入容器<br>docker exec -it  容器id   /bin/bash</p><p>3.生产方式进入容器<br> 我们生产中常用的进入容器方法是使用脚本，脚本内容如下:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"># 定义进入仓库函数</span><br><span class="line">docker_in()&#123;</span><br><span class="line">  NAME_ID=$<span class="number">1</span></span><br><span class="line">  PID=$(docker inspect --format &#123;&#123;.State.Pid&#125;&#125; $NAME_ID)</span><br><span class="line">  nsenter --target $PID --mount --uts --ipc --net --pid</span><br><span class="line">&#125;</span><br><span class="line">docker_in $<span class="number">1</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;docker是什么？&quot;&gt;&lt;a href=&quot;#docker是什么？&quot; class=&quot;headerlink&quot; title=&quot;docker是什么？&quot;&gt;&lt;/a&gt;docker是什么？&lt;/h5&gt;&lt;p&gt;docker是一个开源的容器引擎，它基于LCX容器技术，使用Go语言开发。&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="技术 容器" scheme="http://yoursite.com/tags/%E6%8A%80%E6%9C%AF-%E5%AE%B9%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IO阻塞与非阻塞一篇就够了</title>
+    <link href="http://yoursite.com/2018/12/27/io_sync/"/>
+    <id>http://yoursite.com/2018/12/27/io_sync/</id>
+    <published>2018-12-27T02:49:55.298Z</published>
+    <updated>2018-12-27T01:50:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="什么叫IO"><a href="#什么叫IO" class="headerlink" title="什么叫IO"></a>什么叫IO</h5><p>io通常是指计算机系统输入和输出的称呼，包括设备（键盘鼠标显示器）、总线、磁盘读写、内存等都称之为IO。</p><h5 id="IO阻塞与非阻塞"><a href="#IO阻塞与非阻塞" class="headerlink" title="IO阻塞与非阻塞"></a>IO阻塞与非阻塞</h5><p>阻塞（block）：用户态进程切换至内核态进程（read，write，accept等API函数系统调用），用户态进程一直处于挂起状态，直至内核态返回，继续工作。</p><p>非阻塞（nonblock）:用户态进程切换至内核态进程（read，write，accept等API函数系统调用），内核态进程会立马返回数据或状态码给用户态进程，用户态进程无需处于挂起状态，一直处于忙碌状态。</p><h5 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h5><p>同步（synchronous）:一个服务进行数据请求时，服务方立马告知请求结果，若数据不满足，请求方会再次主动发送请求到服务方，直至请求方得到满意的回复。（期望的结果）</p><p>异步（asynchronous）：客户向服务方请求，服务方也会立马回复请求方，不同的是，客户请求方只留下一个回调函数，用来让服务方等待条件满足后，主动通知客户方最终结果。（此方式客户方只请求了一次服务方）</p><ul><li>阻塞、非阻塞和同步异步是两个不同的概念。 </li><li>同步与异步最大的差异是对待结果的返回方式不一样。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;什么叫IO&quot;&gt;&lt;a href=&quot;#什么叫IO&quot; class=&quot;headerlink&quot; title=&quot;什么叫IO&quot;&gt;&lt;/a&gt;什么叫IO&lt;/h5&gt;&lt;p&gt;io通常是指计算机系统输入和输出的称呼，包括设备（键盘鼠标显示器）、总线、磁盘读写、内存等都称之为IO。&lt;/p&gt;
+&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="技术 linux" scheme="http://yoursite.com/tags/%E6%8A%80%E6%9C%AF-linux/"/>
+    
+  </entry>
   
   <entry>
     <title>线程池</title>
