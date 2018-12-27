@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2018/12/27/c++11featrues/</loc>
+    <lastmod>2018-12-27T09:21:45.000Z</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2018/12/27/docker/</loc>
     <lastmod>2018-12-27T02:48:00.000Z</lastmod>
   </url>  <url>
