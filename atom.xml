@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-04T02:55:33.634Z</updated>
+  <updated>2019-01-12T09:50:32.897Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C时间戳</title>
+    <link href="http://yoursite.com/2019/01/12/C_time/"/>
+    <id>http://yoursite.com/2019/01/12/C_time/</id>
+    <published>2019-01-12T09:50:32.897Z</published>
+    <updated>2019-01-12T09:50:32.897Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="clock-、time-、clock-gettime-和gettimeofday-函数的用法和区别"><a href="#clock-、time-、clock-gettime-和gettimeofday-函数的用法和区别" class="headerlink" title="clock()、time()、clock_gettime()和gettimeofday()函数的用法和区别"></a>clock()、time()、clock_gettime()和gettimeofday()函数的用法和区别</h5><p>1.精确度比较:</p><p>以下是各种精确度的类型转换:<br>1秒=1000毫秒(ms), 1毫秒=1/1000秒(s)；<br>1秒=1000000 微秒(μs), 1微秒=1/1000000秒(s)；<br>1秒=1000000000 纳秒(ns),1纳秒=1/1000000000秒(s)；</p><p>clock()函数的精确度是10毫秒(ms)<br>times()函数的精确度是10毫秒(ms)<br>gettimofday()函数的精确度是微秒(μs)<br>clock_gettime()函数的计量单位为十亿分之一，也就是纳秒(ns)</p><p><a href="https://www.cnblogs.com/krythur/archive/2013/02/25/2932647.html" target="_blank" rel="noopener">详情</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;clock-、time-、clock-gettime-和gettimeofday-函数的用法和区别&quot;&gt;&lt;a href=&quot;#clock-、time-、clock-gettime-和gettimeofday-函数的用法和区别&quot; class=&quot;headerlink&quot; t
+      
+    
+    </summary>
+    
+    
+      <category term="技术 C" scheme="http://yoursite.com/tags/%E6%8A%80%E6%9C%AF-C/"/>
+    
+  </entry>
   
   <entry>
     <title>STL常用API</title>
