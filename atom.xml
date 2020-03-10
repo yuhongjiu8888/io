@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-10T10:34:28.643Z</updated>
+  <updated>2020-03-10T11:08:26.522Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C/C++编程</title>
+    <link href="http://yoursite.com/2020/03/10/C++%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E5%92%8C%E5%AE%9A%E4%B9%89/"/>
+    <id>http://yoursite.com/2020/03/10/C++全局变量的声明和定义/</id>
+    <published>2020-03-10T11:08:26.522Z</published>
+    <updated>2020-03-10T11:08:26.522Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="C-全局变量的声明和定义"><a href="#C-全局变量的声明和定义" class="headerlink" title="C++全局变量的声明和定义"></a>C++全局变量的声明和定义</h1><h2 id="声明与定义"><a href="#声明与定义" class="headerlink" title="声明与定义"></a><strong>声明与定义</strong></h2><p>函数或变量在声明时，并没有给它实际的物理内存空间，它有时候可保证你的程序编译通过；<br>  函数或变量在定义时，它就在内存中有了实际的物理空间。</p><p>如果你在编译单元中引用的外部变量没有在整个工程中任何一个地方定义的话，那么即使它在编译时可以通过，在连接时也会报错，因为程序在内存中找不到这个变量。</p><p>函数或变量可以声明多次，但定义只能有一次。</p><h2 id="extern作用"><a href="#extern作用" class="headerlink" title="extern作用"></a><strong>extern作用</strong></h2><p>作用一：当它与”C”一起连用时，如extern “C” void fun(int a, int b);，则编译器在编译fun这个函数名时按C的规则去翻译相应的函数名而不是C++的。<br>作用二：当它不与”C”在一起修饰变量或函数时，如在头文件中，extern int g_nNum;，它的作用就是声明函数或变量的作用范围的关键字，其声明的函数和变量可以在本编译单元或其他编译单元中使用。</p><p>即B编译单元要引用A编译单元中定义的全局变量或函数时，B编译单元只要包含A编译单元的头文件即可，在编译阶段，B编译单元虽然找不到该函数或变量，但它不会报错，它会在链接时从A编译单元生成的目标代码中找到此函数。</p><p>extern声明全局变量的时候，表明在一个文件地方声明定义后，其他文件中需要使用的时候需要声明在变量前声明为extern.例如在A.cpp中，声明定义变量g_keyApi;</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//A.cpp</span></span><br><span class="line">fit::KeyApi::KaClass g_KeyApi = <span class="literal">NULL</span>;</span><br><span class="line">g_KeyApi = <span class="keyword">new</span> KaClass();</span><br></pre></td></tr></table></figure><p>在B.cpp中需要使用g_KeyApi时，可以在文件头部这样声明：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//B.cpp</span></span><br><span class="line"><span class="keyword">extern</span> fit::KeyApi::KaClass g_KeyApi;</span><br><span class="line">g_KeyApi-&gt;signCheck();<span class="comment">//验签</span></span><br></pre></td></tr></table></figure><p>这样可以让B.cpp在编译的时候通过，连接的时候再去找obj。</p><h2 id="静态全局变量-static"><a href="#静态全局变量-static" class="headerlink" title="静态全局变量(static)"></a><strong>静态全局变量(static)</strong></h2><p>注意使用static修饰变量，就不能使用extern来修饰，即static和extern不可同时出现。<br> static修饰的全局变量的声明与定义同时进行，即当你在头文件中使用static声明了全局变量，同时它也被定义了。<br>    static修饰的全局变量的作用域只能是本身的编译单元。在其他编译单元使用它时，只是简单的把其值复制给了其他编译单元，其他编译单元会另外开个内存保存它，在其他编译单元对它的修改并不影响本身在定义时的值。即在其他编译单元A使用它时，它所在的物理地址，和其他编译单元B使用它时，它所在的物理地址不一样，A和B对它所做的修改都不能传递给对方。<br>    多个地方引用静态全局变量所在的头文件，不会出现重定义错误，因为在每个编译单元都对它开辟了额外的空间进行存储。</p><p>注：一般定义static 全局变量时，都把它放在.cpp文件中而不是.h文件中，这样就不会给其他编译单元造成不必要的信息污染。</p><h2 id="全局常量-const"><a href="#全局常量-const" class="headerlink" title="全局常量(const)"></a><strong>全局常量(const)</strong></h2><p>const单独使用时，其特性与static一样（每个编译单元中地址都不一样，不过因为是常量，也不能修改，所以就没有多大关系）。</p><p> const与extern一起使用时，其特性与extern一样。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">char</span> g_szBuffer[];      <span class="comment">//写入 .h中</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> g_szBuffer[] = <span class="string">"123456"</span>; <span class="comment">// 写入.cpp中</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;C-全局变量的声明和定义&quot;&gt;&lt;a href=&quot;#C-全局变量的声明和定义&quot; class=&quot;headerlink&quot; title=&quot;C++全局变量的声明和定义&quot;&gt;&lt;/a&gt;C++全局变量的声明和定义&lt;/h1&gt;&lt;h2 id=&quot;声明与定义&quot;&gt;&lt;a href=&quot;#声明与定义&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="技术,编程语言" scheme="http://yoursite.com/tags/%E6%8A%80%E6%9C%AF-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C/C++编程</title>
+    <link href="http://yoursite.com/2020/03/10/%E6%87%92%E6%B1%89%E6%A8%A1%E5%BC%8F%E4%B8%8E%E9%A5%BF%E6%B1%89%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://yoursite.com/2020/03/10/懒汉模式与饿汉模式/</id>
+    <published>2020-03-10T11:06:45.937Z</published>
+    <updated>2020-03-10T10:47:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="懒汉模式与饿汉模式"><a href="#懒汉模式与饿汉模式" class="headerlink" title="懒汉模式与饿汉模式"></a>懒汉模式与饿汉模式</h1><p>单例懒汉模式：需要使用的时候在进行实例化，加载速度快，调用慢。非线程安全</p><p>单例饿汉模式：在声明的时候立即初始化实例化，加载速度慢，调用速度快。线程安全</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;懒汉模式与饿汉模式&quot;&gt;&lt;a href=&quot;#懒汉模式与饿汉模式&quot; class=&quot;headerlink&quot; title=&quot;懒汉模式与饿汉模式&quot;&gt;&lt;/a&gt;懒汉模式与饿汉模式&lt;/h1&gt;&lt;p&gt;单例懒汉模式：需要使用的时候在进行实例化，加载速度快，调用慢。非线程安全&lt;/p&gt;
+&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="技术,编程语言" scheme="http://yoursite.com/tags/%E6%8A%80%E6%9C%AF-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+  </entry>
   
   <entry>
     <title>Fabric源码分析</title>
